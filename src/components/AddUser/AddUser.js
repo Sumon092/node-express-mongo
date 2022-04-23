@@ -9,7 +9,7 @@ const AddUser = () => {
 
 
         //send data to server
-        fetch('', {
+        fetch('http://localhost:5000/user', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -19,6 +19,8 @@ const AddUser = () => {
             .then(res => res.json())
             .then(data => {
                 console.log('success', data);
+                alert('user added successful');
+                event.target.reset();
             })
     }
 
