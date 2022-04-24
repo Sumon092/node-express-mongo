@@ -7,12 +7,33 @@ const Home = () => {
         fetch('http://localhost:5000/user')
             .then(res => res.json())
             .then(data => setUsers(data));
-    }, [])
+    }, []);
+
+    const handleDeleteUser = id => {
+        const proceed = window.confirm('Are you sure you want to delete?');
+        if (proceed) {
+            console.log('deleting user with id, ', id);
+            // console.log(id);
+            const url = `http://localhost:5000/user/${id}`;
+            console.log(url);
+            fetch(url, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        console.log('deleted');
+                        const remaining = users.filter(user => user._id !== id);
+                        setUsers(remaining);
+                    }
+                })
+        }
+    }
     return (
         <div>
-            <h2>Users</h2>
+            <h2>Number of Users {users.length}</h2>
             {
-                users.map(user => <li key={user._id}>Name: {user.name}:: Email:{user.email}<button>X</button></li>)
+                users.map(user => <li key={user._id}>Name: {user.name}:: Email:{user.email}<button onClick={() => handleDeleteUser(user._id)}>X</button></li>)
             }
 
         </div>
