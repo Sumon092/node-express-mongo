@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 const Home = () => {
     const [users, setUsers] = useState([]);
-
     useEffect(() => {
         fetch('http://localhost:5000/user')
             .then(res => res.json())
@@ -33,7 +33,9 @@ const Home = () => {
         <div>
             <h2>Number of Users {users.length}</h2>
             {
-                users.map(user => <li key={user._id}>Name: {user.name}:: Email:{user.email}<button onClick={() => handleDeleteUser(user._id)}>X</button></li>)
+                users.map(user => <li key={user._id}>Name: {user.name}:: Email:{user.email}
+                    <Link to={`/update/${user._id}`}>UPDATE</Link>
+                    <button onClick={() => handleDeleteUser(user._id)}>X</button></li>)
             }
 
         </div>
